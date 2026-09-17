@@ -1,0 +1,11 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'>
+  <!-- User silhouette -->
+  <path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2' fill='none' stroke='#1E1C19' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/>
+  <circle cx='12' cy='7' r='4' fill='none' stroke='#1E1C19' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/>
+  
+  <!-- White knockout halo around the bolt -->
+  <polygon points='16.5 2 9.5 11.5 14.5 11.5 10.5 21 19.5 10 14.5 10 16.5 2' fill='#FFFFFF' stroke='#FFFFFF' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'/>
+  
+  <!-- Yellow lightning bolt -->
+  <polygon points='16.5 2 9.5 11.5 14.5 11.5 10.5 21 19.5 10 14.5 10 16.5 2' fill='#FEA203' stroke='#FEA203' stroke-width='0.5' stroke-linejoin='round' stroke-linecap='round'/>
+</svg>

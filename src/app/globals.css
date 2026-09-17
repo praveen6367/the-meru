@@ -1,0 +1,1052 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
+
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@source "./";
+
+/* Tailwind theme: The Meru Design System tokens + breakpoints */
+@theme inline {
+  --breakpoint-vp375: 375px;
+  --breakpoint-vp768: 768px;
+  --breakpoint-vp1280: 1280px;
+  --breakpoint-vp1920: 1920px;
+  --breakpoint-md: 572px;
+  --breakpoint-lg: 1025px;
+  --breakpoint-2xl: 1601px;
+
+  /* The Meru Color Tokens */
+  --color-sacred-ivory: var(--sacred-ivory);
+  --color-warm-sand: var(--warm-sand);
+  --color-meru-gold: var(--meru-gold);
+  --color-meru-gold-light: var(--meru-gold-light);
+  --color-deep-charcoal: var(--deep-charcoal);
+  --color-earth: var(--earth);
+  --color-botanical: var(--botanical);
+  --color-terracotta: var(--terracotta);
+
+  /* Semantic System Mappings */
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-color-001: var(--color-001);
+  --color-clr-0: var(--clr-0);
+  --color-surface: var(--surface);
+  --color-color-005: var(--color-005);
+  --color-surface-3: var(--surface-3);
+  --color-clr-1: var(--clr-1);
+  --color-clr-2: var(--clr-2);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-surface-2: var(--surface-2);
+  --color-clr-3: var(--clr-3);
+  --color-clr-4: var(--clr-4);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-highlight: var(--primary-highlight);
+  --color-color-004: var(--color-004);
+  --color-clr-5: var(--clr-5);
+  --color-clr-6: var(--clr-6);
+  --color-color-003: var(--color-003);
+  --color-color-002: var(--color-002);
+  --color-clr-7: var(--clr-7);
+  --color-clr-8: var(--clr-8);
+  --color-accent: var(--accent);
+  --color-clr-9: var(--clr-9);
+  --color-clr-10: var(--clr-10);
+  --color-clr-11: var(--clr-11);
+
+  /* Typography */
+  --font-serif: var(--font-meru-sans);
+  --font-sans: var(--font-meru-sans);
+}
+
+/* The Meru Design Tokens (CSS Variables) */
+:root {
+  /* 1. Core Brand Colors */
+  --sacred-ivory: #F8F5EE;
+  --warm-sand: #E9DDC9;
+  --meru-gold: #C99A28;
+  --meru-gold-light: #E0B94A;
+  --deep-charcoal: #1E1C19;
+  --earth: #46382B;
+  --botanical: #465542;
+  --terracotta: #9D5B3D;
+
+  /* 2. Global Semantic Mappings (Quiet Luxury, Sacred Ivory + Deep Charcoal + Gold Action Accents) */
+  --background: #F8F5EE;
+  --foreground: #1E1C19;
+  --primary: #C99A28;
+  --primary-highlight: #E0B94A;
+  --accent: #C99A28;
+  --surface: #E9DDC9;
+  --surface-2: #F1E9DC;
+  --surface-3: #FAF8F5;
+  --border: rgba(30, 28, 25, 0.12);
+  --border-gold: rgba(201, 154, 40, 0.3);
+  --muted: #46382B;
+  --muted-foreground: #6B5E51;
+  --color-001: #1E1C19;
+  --color-002: #C99A28;
+  --color-003: rgba(195, 195, 195, 0.84);
+  --color-004: #9D5B3D;
+  --color-005: #46382B;
+  --clr-0: rgba(30, 28, 25, 0.08);
+  --clr-1: #1E1C19;
+  --clr-2: rgba(30, 28, 25, 0.1);
+  --clr-3: #F1E9DC;
+  --clr-4: #C99A28;
+  --clr-5: #FAF8F5;
+  --clr-6: #FAF8F5;
+  --clr-7: #1E1C19;
+  --clr-8: #151311;
+  --clr-9: #E9DDC9;
+  --clr-10: rgba(201, 154, 40, 0.25);
+  --clr-11: rgba(0, 0, 0, 0.12);
+
+  /* 3. Typography Families */
+  --font-meru-serif: "Plus Jakarta Sans", "Inter", "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-meru-sans: "Plus Jakarta Sans", "Inter", "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* 4. Elevation Shadows (Soft natural, craft, stone/paper) */
+  --shadow-subtle: 0 1px 3px rgba(30, 28, 25, 0.05), 0 1px 2px rgba(30, 28, 25, 0.03);
+  --shadow-card: 0 4px 14px -2px rgba(30, 28, 25, 0.06), 0 2px 6px -1px rgba(30, 28, 25, 0.03);
+  --shadow-hover: 0 14px 30px -4px rgba(30, 28, 25, 0.1), 0 4px 10px -2px rgba(30, 28, 25, 0.04);
+  --shadow-gold: 0 4px 16px -2px rgba(201, 154, 40, 0.28);
+
+  /* 5. Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* 6. Motion Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes meruStoryRing {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-meru-ring-slow {
+  animation: meruStoryRing 16s linear infinite;
+}
+
+.animate-meru-ring-active {
+  animation: meruStoryRing 8s linear infinite;
+}
+
+.animate-meru-ring-hover {
+  animation: meruStoryRing 4.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-meru-ring-slow,
+  .animate-meru-ring-active,
+  .animate-meru-ring-hover {
+    animation: none !important;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+:root {
+  /* fonts */
+  --font-body: GothamRounded-Light;
+  --font-001: "Open Sans";
+  --font-002: GothamRounded-Book;
+  --font-003: "Font Awesome 6 Free";
+  --font-004: "Nunito Sans", Helvetica, Arial, sans-serif;
+  --font-005: "Font Awesome 6 Brands";
+  /* fontSizes */
+  --font-size-001: 12.8px;
+  --font-size-002: 14px;
+  --font-size-003: 15px;
+  --font-size-004: 16px;
+  --font-size-005: 18px;
+  --font-size-006: 18.6667px;
+  --font-size-007: 20px;
+  --font-size-008: 21.3333px;
+  --font-size-009: 24px;
+  --font-size-010: 25px;
+  /* fontWeights */
+  --font-weight-001: 400;
+  --font-weight-002: 600;
+  --font-weight-003: 700;
+  --font-weight-004: 900;
+  /* lineHeights */
+  --line-height-001: 25.6px;
+  --line-height-002: 16px;
+  --line-height-003: 15.36px;
+  --line-height-004: 0px;
+  --line-height-005: 24px;
+  --line-height-006: 17.92px;
+  --line-height-007: 22.4px;
+  --line-height-008: 25px;
+  --line-height-009: 2px;
+  /* spacing */
+  --space-001: 3px;
+  --space-002: 4px;
+  --space-003: 5px;
+  --space-004: 8px;
+  --space-005: 10px;
+  --space-006: 11px;
+  --space-007: 11.5156px;
+  --space-008: 12.8px;
+  --space-009: 13px;
+  --space-010: 15px;
+  --space-011: 16px;
+  --space-012: 18px;
+  --space-013: 20px;
+  --space-014: 24px;
+  --space-015: 25px;
+  --space-016: 38.3906px;
+  --space-017: 40px;
+  --space-018: 64px;
+  --space-019: 255px;
+  /* radii */
+  --radius-001: 3.2px;
+  --radius-002: 8px;
+  --radius-003: 15px;
+  --radius-004: 16px;
+  --radius-005: 50%;
+  /* shadows */
+  --shadow-001: rgb(0, 0, 0) 0px -3px 12px -3px;
+  --shadow-002: rgb(0, 0, 0) 3px 3px 9px -4px;
+  --shadow-003: rgb(212, 175, 53) 4px 4px 8px -3px;
+  /* zIndices */
+  --z-001: 1;
+  --z-002: 10;
+  /* breakpoints */
+  --bp-375: 375px;
+  --bp-768: 768px;
+  --bp-1280: 1280px;
+  --bp-1920: 1920px;
+}
+
+:root {
+  --clr-0: rgb(226, 226, 226);
+  --clr-1: rgb(102, 102, 102);
+  --clr-2: rgba(0, 0, 0, 0);
+  --clr-3: rgb(255, 248, 227);
+  --clr-4: rgb(247, 177, 21);
+  --clr-5: rgb(254, 229, 178);
+  --clr-6: rgb(237, 240, 237);
+  --clr-7: rgb(250, 250, 250);
+  --clr-8: rgb(8, 117, 187);
+  --clr-9: rgb(69, 186, 119);
+  --clr-10: rgba(0, 0, 0, 0.18);
+  --clr-11: rgba(0, 0, 0, 0.15);
+}
+
+@layer base {
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid currentColor; }
+html { -webkit-text-size-adjust: 100%; line-height: normal; }
+body { margin: 0; }
+ul, ol, menu { list-style: none; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea, optgroup { font: inherit; color: inherit; background: transparent; border: 0; padding: 0; margin: 0; text-align: inherit; letter-spacing: inherit; }
+button { cursor: pointer; }
+table { border-collapse: separate; border-spacing: 0; }
+img, picture, video, canvas, svg { display: inline-block; }
+/* Lottie runtime fit: the player re-mounts its svg/canvas into an absolute overlay that fills
+   the host's captured (per-viewport, definite) box. Force that runtime media to fit the box so
+   an aspect-mismatched viewBox (e.g. a portrait animation in a shorter, letterboxed source box)
+   can't inflate past the pinned height. Scoped to the runtime-marked host only. */
+[data-ditto-lottie] > div > svg, [data-ditto-lottie] > div > canvas { width: 100%; height: 100%; display: block; }
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+/* Neutralize UA text defaults to inherit so the generator's default-skipping is
+   correct: a property equal to its inherited value is simply not emitted. */
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+b, strong, th { font-weight: inherit; }
+em, i, cite, var, dfn, address, q { font-style: inherit; }
+small, big, sub, sup { font-size: inherit; }
+sub, sup { vertical-align: inherit; }
+code, kbd, samp, pre, tt, var { font-family: inherit; font-size: inherit; }
+mark { background-color: transparent; color: inherit; }
+abbr[title] { text-decoration: none; }
+fieldset, legend { min-width: 0; }
+
+/* fonts */
+@font-face {
+  font-family: "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/assets/cloned/fonts/11dffbf824a4.woff2") format("woff2"), url("/assets/cloned/fonts/36a04c3de8d9.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/assets/cloned/fonts/62847966ddee.woff2") format("woff2"), url("/assets/cloned/fonts/6e19f1811300.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("/assets/cloned/fonts/fbf42d9a6a2b.woff2") format("woff2"), url("/assets/cloned/fonts/5bc39d37642a.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Font Awesome 6 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/assets/cloned/fonts/11dffbf824a4.woff2") format("woff2"), url("/assets/cloned/fonts/36a04c3de8d9.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Font Awesome 6 Free";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/assets/cloned/fonts/62847966ddee.woff2") format("woff2"), url("/assets/cloned/fonts/6e19f1811300.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Font Awesome 6 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("/assets/cloned/fonts/fbf42d9a6a2b.woff2") format("woff2"), url("/assets/cloned/fonts/5bc39d37642a.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "FontAwesome";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/assets/cloned/fonts/fbf42d9a6a2b.woff2") format("woff2"), url("/assets/cloned/fonts/5bc39d37642a.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "FontAwesome";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/assets/cloned/fonts/62847966ddee.woff2") format("woff2"), url("/assets/cloned/fonts/6e19f1811300.ttf") format("truetype");
+  unicode-range: u+f003,u+f006,u+f014,u+f016-f017,u+f01a-f01b,u+f01d,u+f022,u+f03e,u+f044,u+f046,u+f05c-f05d,u+f06e,u+f070,u+f087-f088,u+f08a,u+f094,u+f096-f097,u+f09d,u+f0a0,u+f0a2,u+f0a4-f0a7,u+f0c5,u+f0c7,u+f0e5-f0e6,u+f0eb,u+f0f6-f0f8,u+f10c,u+f114-f115,u+f118-f11a,u+f11c-f11d,u+f133,u+f147,u+f14e,u+f150-f152,u+f185-f186,u+f18e,u+f190-f192,u+f196,u+f1c1-f1c9,u+f1d9,u+f1db,u+f1e3,u+f1ea,u+f1f7,u+f1f9,u+f20a,u+f247-f248,u+f24a,u+f24d,u+f255-f25b,u+f25d,u+f271-f274,u+f278,u+f27b,u+f28c,u+f28e,u+f29c,u+f2b5,u+f2b7,u+f2ba,u+f2bc,u+f2be,u+f2c0-f2c1,u+f2c3,u+f2d0,u+f2d2,u+f2d4,u+f2dc;
+}
+
+@font-face {
+  font-family: "FontAwesome";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/assets/cloned/fonts/66506878b76b.woff2") format("woff2"), url("/assets/cloned/fonts/70ed9d3ee3cb.ttf") format("truetype");
+  unicode-range: u+f041,u+f047,u+f065-f066,u+f07d-f07e,u+f080,u+f08b,u+f08e,u+f090,u+f09a,u+f0ac,u+f0ae,u+f0b2,u+f0d0,u+f0d6,u+f0e4,u+f0ec,u+f10a-f10b,u+f123,u+f13e,u+f148-f149,u+f14c,u+f156,u+f15e,u+f160-f161,u+f163,u+f175-f178,u+f195,u+f1f8,u+f219,u+f250,u+f252,u+f27a;
+}
+
+@font-face {
+  font-family: "Google Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/48f24691dbb0.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/a31a370d02c6.woff2") format("woff2");
+  unicode-range: U+308, U+530-58F, U+2010, U+2024, U+25CC, U+FB13-FB17;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/77bef9b22bab.woff2") format("woff2");
+  unicode-range: U+951-952, U+964-965, U+980-9FE, U+1CD0, U+1CD2, U+1CD5-1CD6, U+1CD8, U+1CE1, U+1CEA, U+1CED, U+1CF2, U+1CF5-1CF7, U+200C-200D, U+20B9, U+25CC, U+A8F1;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/d825e9ce08d2.woff2") format("woff2");
+  unicode-range: U+2C7, U+2D8-2D9, U+2DB, U+307, U+1400-167F, U+18B0-18F5, U+25CC, U+11AB0-11ABF;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/e85828f416c0.woff2") format("woff2");
+  unicode-range: U+460-52F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/b1dcbab071ea.woff2") format("woff2");
+  unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/4980a0dc3230.woff2") format("woff2");
+  unicode-range: U+900-97F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/e09936f0cdc8.woff2") format("woff2");
+  unicode-range: U+30E, U+1200-1399, U+2D80-2DDE, U+AB01-AB2E, U+1E7E0-1E7E6, U+1E7E8-1E7EB, U+1E7ED-1E7EE, U+1E7F0-1E7FE;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/ffb813de5fa7.woff2") format("woff2");
+  unicode-range: U+589, U+10A0-10FF, U+1C90-1CBA, U+1CBD-1CBF, U+205A, U+2D00-2D2F, U+2E31;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/a44fda0bdb1b.woff2") format("woff2");
+  unicode-range: U+1F00-1FFF;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/541f7817fe79.woff2") format("woff2");
+  unicode-range: U+370-377, U+37A-37F, U+384-38A, U+38C, U+38E-3A1, U+3A3-3FF;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/5616bfa379a8.woff2") format("woff2");
+  unicode-range: U+951-952, U+964-965, U+A80-AFF, U+200C-200D, U+20B9, U+25CC, U+A830-A839;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/832b4dc5763a.woff2") format("woff2");
+  unicode-range: U+951-952, U+964-965, U+A01-A76, U+200C-200D, U+20B9, U+25CC, U+262C, U+A830-A839;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/30a35759fe22.woff2") format("woff2");
+  unicode-range: U+307-308, U+590-5FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/46d4f2a1ffe2.woff2") format("woff2");
+  unicode-range: U+1780-17FF, U+19E0-19FF, U+200C-200D, U+25CC;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/00a544a888d1.woff2") format("woff2");
+  unicode-range: U+E81-EDF, U+200C-200D, U+25CC;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/8fe1ce13819b.woff2") format("woff2");
+  unicode-range: U+307, U+323, U+951-952, U+964-965, U+D00-D7F, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC, U+A830-A832;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/62206b910f96.woff2") format("woff2");
+  unicode-range: U+951-952, U+964-965, U+B01-B77, U+1CDA, U+1CF2, U+200C-200D, U+20B9, U+25CC;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/a0254b9804d9.woff2") format("woff2");
+  unicode-range: U+964-965, U+D81-DF4, U+1CF2, U+200C-200D, U+25CC, U+111E1-111F4;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/1e10e8a32e88.woff2") format("woff2");
+  unicode-range: U+1-C, U+E-1F, U+7F-9F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA89, U+1FA8F-1FAC6, U+1FACE-1FADC, U+1FADF-1FAE9, U+1FAF0-1FAF8, U+1FB00-1FBFF;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/6f6ae08e2d86.woff2") format("woff2");
+  unicode-range: U+964-965, U+B82-BFA, U+200C-200D, U+20B9, U+25CC;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/720b776540e8.woff2") format("woff2");
+  unicode-range: U+951-952, U+964-965, U+C00-C7F, U+1CDA, U+1CF2, U+200C-200D, U+25CC;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/3260a7f9a34a.woff2") format("woff2");
+  unicode-range: U+2D7, U+303, U+331, U+E01-E5B, U+200C-200D, U+25CC;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/45904a7d31dc.woff2") format("woff2");
+  unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/77a9aaceeec8.woff2") format("woff2");
+  unicode-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+308, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/c8492e0f35fd.woff2") format("woff2");
+  unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "GothamRounded-Bold";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/0cfdc4fa2aad.woff2") format("woff2"), url("/assets/cloned/fonts/51c695dceb17.woff") format("woff");
+}
+
+@font-face {
+  font-family: "GothamRounded-Book";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/53b3453b0851.woff2") format("woff2"), url("/assets/cloned/fonts/9e641e8e6c98.woff") format("woff");
+}
+
+@font-face {
+  font-family: "GothamRounded-Light";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/f5c052090413.woff2") format("woff2"), url("/assets/cloned/fonts/6408f6a4778c.woff") format("woff");
+}
+
+@font-face {
+  font-family: "GothamRounded-Medium";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/c258dad517c4.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Helvetica";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/f70798a25d7f.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Helvetica";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/f70798a25d7f.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Helvetica";
+  font-style: normal;
+  font-weight: 450;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/f70798a25d7f.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Helvetica";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/f70798a25d7f.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Helvetica";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/f70798a25d7f.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Helvetica";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/f70798a25d7f.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Hero";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/02f54f46c16b.woff2") format("woff2"), url("/assets/cloned/fonts/f2970915de15.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/b3061d915ff6.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/ad68d13fa4b9.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/0ba510d5094b.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "JudgemeStar";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url(data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAScAA0AAAAABrAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEgAAAABoAAAAcbyQ+3kdERUYAAARgAAAAHgAAACAAMwAGT1MvMgAAAZgAAABGAAAAVi+vS9xjbWFwAAAB8AAAAEAAAAFKwBMjvmdhc3AAAARYAAAACAAAAAj//wADZ2x5ZgAAAkAAAAEJAAABdH33LXtoZWFkAAABMAAAAC0AAAA2BroQKWhoZWEAAAFgAAAAHAAAACQD5QHQaG10eAAAAeAAAAAPAAAAFAYAAABsb2NhAAACMAAAAA4AAAAOAO4AeG1heHAAAAF8AAAAHAAAACAASgAvbmFtZQAAA0wAAADeAAABkorWfVZwb3N0AAAELAAAACkAAABEp3ubLXgBY2BkYADhPPP4OfH8Nl8ZuJkYQODS2fRrCPr/aSYGxq1ALgcDWBoAO60LkwAAAHgBY2BkYGDc+v80gx4TAwgASaAICmABAFB+Arl4AWNgZGBgYGPQYWBiAAIwyQgWc2AAAwAHVQB6eAFjYGRiYJzAwMrAwejDmMbAwOAOpb8ySDK0MDAwMbByMsCBAAMCBKS5pjA4PGB4wMR44P8BBj3GrQymQGFGkBwAjtgK/gAAeAFjYoAAEA1jAwAAZAAHAHgB3crBCcAwDEPRZydkih567CDdf4ZskmLwFBV8xBfCaC4BXkOUmx4sU0h2ngNb9V0vQCxaRKIAevT7fGWuBrEAAAAAAAAAAAA0AHgAugAAeAF9z79Kw1AUx/FzTm7un6QmJtwmQ5Bg1abgEGr/BAqlU6Gju+Cgg1MkQ/sA7Vj7BOnmO/gUvo2Lo14NqIO6/IazfD8HEODtmQCfoANwNsyp2/GJt3WKQrd1NLiYYWx2PBqOsmJMEOznPOTzfSCrhAtbbLdmeFLJV9eKd63WLrZcIcuaEVdssWCKM6pLCfTVOYbz/0pNSMSZKLIZpvh78sAUH6PlMrreTCabP9r+Z/puPZ2ur/RqpQHgh+MIegCnXeM4MRAPjYN//5tj4ZtTjkFqEdmeMShlEJ7tVAly2TAkx6R68Fl4E/aVvn8JqHFQ4JS1434gXKcuL31dDhzs3YbsEOAd/IU88gAAAHgBfY4xTgMxEEVfkk0AgRCioKFxQYd2ZRtpixxgRU2RfhU5q5VWseQ4JdfgAJyBlmNwAM7ABRhZQ0ORwp7nr+eZAa54YwYg9zm3ynPOeFRe8MCrciXOh/KSS76UV5L/iDmrLiS5AeU519wrL3jmSbkS5115yR2fyivJv9kx0ZMZ2RLZw27q87iNQi8EBo5FSPIMw3HqBboi5lKTGAGDp8FKXWP+t9TU01Lj5His1Ba6uM9dTEMwvrFmbf5GC/q2drW3ruXUhhsCiQOjznFlCzYhHUZp4xp76vsvQh89CQAAeAFjYGJABowM6IANLMrEyMTIzMjCXpyRWJBqZshWXJJYBKOMAFHFBucAAAAAAAAB//8AAngBY2BkYGDgA2IJBhBgAvKZGViBJAuYxwAABJsAOgAAeAFjYGBgZACCk535hiD60tn0azAaAEqpB6wAAA==);
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/e2afbddafe3c.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/b3ab87a35c62.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-style: normal;
+  font-weight: 450;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/4f830d6310d1.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/4768cb484e1e.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/e844bf661540.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Metropolis";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/02c2c1ce3749.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/62ae527a597b.woff2") format("woff2");
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/a0f9d5beb5de.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/99392cdf0e94.woff2") format("woff2");
+  unicode-range: U+1F00-1FFF;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/4313d1dc7fd7.woff2") format("woff2");
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/ad90d00f65c7.woff2") format("woff2");
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/ca19b4ee46e1.woff2") format("woff2");
+  unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/3ad133ea7881.woff2") format("woff2");
+  unicode-range: U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA89, U+1FA8F-1FAC6, U+1FACE-1FADC, U+1FADF-1FAE9, U+1FAF0-1FAF8, U+1FB00-1FBFF;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/4a6e8bb3d602.woff2") format("woff2");
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/782fa19b3574.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/3c00ab232cac.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/1227f53be5fe.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "open_sanslight";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/cd775dcec92b.woff2") format("woff2"), url("/assets/cloned/fonts/f4a697e3a762.woff") format("woff");
+}
+
+@font-face {
+  font-family: "slick";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/7c337a8c1b76.eot") format("embedded-opentype");
+}
+body { font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+}
+
+/* Meru Rangoli Minimal Ambient Rotation Animation */
+@keyframes rangoliAmbientSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-rangoli-spin {
+  animation: rangoliAmbientSpin 55s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.animate-rangoli-spin-reverse {
+  animation: rangoliAmbientSpin 65s linear infinite reverse;
+  transform-origin: 50% 50%;
+}
+
+/* ==========================================================================
+   THE MERU GLOBAL BUTTON SYSTEM: SIGNATURE GOLD & GLARE SWEEP ANIMATION
+   ========================================================================== */
+
+@keyframes meruButtonGlare {
+  0% {
+    transform: translateX(-180%) skewX(-20deg);
+    opacity: 0;
+  }
+  3% {
+    opacity: 1;
+  }
+  22% {
+    transform: translateX(260%) skewX(-20deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(260%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+.meru-btn-glare {
+  position: relative;
+  overflow: hidden;
+}
+
+.meru-btn-glare::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -25%;
+  width: 45%;
+  height: 220%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 20%,
+    rgba(255, 255, 255, 0.42) 50%,
+    rgba(255, 255, 255, 0.05) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+  animation: meruButtonGlare 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.meru-btn-glare:hover::after {
+  animation-duration: 3.2s;
+}
+
+/* Copper-Platinum Horizontal 90deg Finish - 3D Borderless Edition */
+.meru-btn-copper-platinum {
+  border: none !important;
+  outline: none !important;
+  background: linear-gradient(
+    90deg,
+    #BA8136 0%,
+    #CCA04C 16%,
+    #E9C672 32%,
+    #FBF0BD 50%,
+    #ECD07E 68%,
+    #D5A552 84%,
+    #BE873B 100%
+  ) !important;
+  color: #1E160D !important;
+  /* 3D Structure: Top light reflection + bottom dark metallic ledge + soft drop shadow */
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.75),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.15),
+    0 3px 0 #8F5E1B,
+    0 4px 8px rgba(143, 94, 27, 0.3) !important;
+  transform: translateY(0);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.meru-btn-copper-platinum:hover {
+  background: linear-gradient(
+    90deg,
+    #C58C40 0%,
+    #D7AC57 16%,
+    #F2D07D 32%,
+    #FFF5CC 50%,
+    #F5DA88 68%,
+    #DFB05D 84%,
+    #C89144 100%
+  ) !important;
+  /* Lift up slightly and enhance 3D thickness */
+  transform: translateY(-1.5px) !important;
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.12),
+    0 4.5px 0 #855516,
+    0 6px 14px rgba(143, 94, 27, 0.4) !important;
+}
+
+.meru-btn-copper-platinum:active {
+  /* Physical 3D button press: pushes down by 2px */
+  transform: translateY(2px) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.25),
+    0 1px 0 #855516,
+    0 2px 4px rgba(143, 94, 27, 0.2) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meru-btn-glare::after {
+    animation: none !important;
+    display: none !important;
+  }
+  .meru-btn,
+  .meru-btn * {
+    transition: none !important;
+    transform: none !important;
+  }
+  .meru-smoke-line,
+  .meru-smoke-float {
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   The Meru Brand Values & Metrics Micro-Animations
+   ========================================================================== */
+
+@keyframes meruSmokeFloat {
+  0% {
+    transform: translateY(0px) scaleY(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translateY(-2px) scaleY(1.05);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(0px) scaleY(1);
+    opacity: 0.65;
+  }
+}
+
+.meru-smoke-float {
+  animation: meruSmokeFloat 3.8s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes meruSealReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.meru-seal-animate {
+  animation: meruSealReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
