@@ -19,6 +19,7 @@ const defaultProducts: MediaTile2Data[] = [
     label3: "₹2,400",
     label4: "₹1,200",
     label5: "50% OFF",
+    isComingSoon: true,
   },
   {
     ariaLabel: "2 / 3",
@@ -34,6 +35,7 @@ const defaultProducts: MediaTile2Data[] = [
     label3: "₹400",
     label4: "₹300",
     label5: "25% OFF",
+    isComingSoon: false,
   },
   {
     ariaLabel: "3 / 3",
@@ -49,19 +51,33 @@ const defaultProducts: MediaTile2Data[] = [
     label3: "₹1,600",
     label4: "₹800",
     label5: "50% OFF",
+    isComingSoon: true,
   },
 ];
 
 export default function LogoCloudSection({ mediaTile2Data = defaultProducts } = {}) {
   return (
     <div className="w-full max-w-[1440px] 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12">
-      {/* 3 Large Product Cards - Stacked vertically on mobile, 3-col grid on desktop */}
-      <div className="flex flex-col gap-5 sm:gap-6 md:grid md:grid-cols-3 md:gap-4 lg:gap-5 py-2 items-stretch">
-        {mediaTile2Data.map((d, i) => (
-          <div key={i} className="w-full h-full">
-            <MediaTile2 d={d} />
-          </div>
-        ))}
+      {/* Product Cards:
+          - Desktop (md+): 3-column grid showing blurred Coming Soon cards on sides, center dhoop batti product visible.
+          - Mobile: Coming soon products hidden completely; only center dhoop batti product displayed.
+      */}
+      <div className="flex flex-col gap-5 sm:gap-6 md:grid md:grid-cols-3 md:gap-4 lg:gap-5 py-2 items-stretch justify-center">
+        {mediaTile2Data.map((d, i) => {
+          const isComingSoon = d.isComingSoon ?? (i === 0 || i === 2);
+          return (
+            <div
+              key={i}
+              className={`w-full h-full ${
+                isComingSoon
+                  ? "hidden md:block"
+                  : "max-w-md mx-auto md:max-w-none"
+              }`}
+            >
+              <MediaTile2 d={d} isComingSoon={isComingSoon} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
