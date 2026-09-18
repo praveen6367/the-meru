@@ -69,15 +69,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col w-full overflow-x-hidden">
-      {/* Announcement Bar */}
+    <div className="min-h-screen bg-background text-foreground flex flex-col w-full overflow-x-clip">
+      {/* Top Announcement / Promo Bar */}
       <Section2 />
 
       {/* Main Header & Navigation */}
       <HeaderSection />
 
       {/* Main Product Content */}
-      <main id="MainContent" className="flex-1 w-full overflow-x-hidden">
+      <main id="MainContent" className="flex-1 w-full overflow-x-clip">
         <ProductView product={product} relatedProducts={relatedProducts} />
       </main>
 

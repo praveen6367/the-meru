@@ -6,7 +6,7 @@ import { Button } from "../design-system/components/Button";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col w-full overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground flex flex-col w-full overflow-x-clip">
       <Section2 />
       <HeaderSection />
       

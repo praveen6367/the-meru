@@ -18,15 +18,16 @@ import { MediaTile_styles } from "./_styles";
 
 const MediaTile_data: MediaTileData[] = [
   {
-    href: "/collections/mukhwas",
-    alt: "Mukhwas",
+    href: "#",
+    alt: "Coming Soon - Worth The Wait",
     height: "150",
     imgSrc: "",
     srcSet: "",
     width: "150",
-    description: "Mukhwas",
-    tag: "ROYAL DIGESTIVE",
+    description: "Coming Soon",
+    tag: "WORTH THE WAIT",
     categoryType: "mukhwas",
+    isComingSoon: true,
   },
   {
     href: "/collections/dhoop-bati",
@@ -41,21 +42,22 @@ const MediaTile_data: MediaTileData[] = [
     categoryType: "dhoop-bati",
   },
   {
-    href: "/collections/mouth-freshener",
-    alt: "Mouth Freshener",
+    href: "#",
+    alt: "Coming Soon - Worth The Wait",
     height: "150",
     imgSrc: "",
     srcSet: "",
     width: "150",
-    description: "Mouth Freshener",
-    tag: "HERBAL REFRESH",
+    description: "Coming Soon",
+    tag: "WORTH THE WAIT",
     categoryType: "mouth-freshener",
+    isComingSoon: true,
   },
 ];
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col w-full overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground flex flex-col w-full overflow-x-clip">
       {/* Top Announcement / Promo Bar */}
       <Section2 />
 
@@ -63,7 +65,7 @@ export default function Page() {
       <HeaderSection />
 
       {/* Main Page Content */}
-      <main className="flex-1 w-full overflow-x-hidden" id="MainContent">
+      <main className="flex-1 w-full overflow-x-clip" id="MainContent">
         {/* Main Hero Banner */}
         <Section4 />
 

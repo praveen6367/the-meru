@@ -74,9 +74,9 @@ export default function HeaderSection() {
   return (
     <>
       <header
-        className={`w-full sticky top-0 z-40 bg-[#FFFFFF] transition-all duration-300 ${
+        className={`w-full sticky top-0 z-40 bg-[#FFFFFF]/95 backdrop-blur-md transition-all duration-300 ${
           isScrolled
-            ? "shadow-sm border-b border-deep-charcoal/10"
+            ? "shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] border-b border-deep-charcoal/10"
             : "border-b border-deep-charcoal/10"
         }`}
         id="shopify-section-header"

@@ -13,6 +13,7 @@ export type MediaTileData = {
   description: string;
   tag?: string;
   isFeatured?: boolean;
+  isComingSoon?: boolean;
   categoryType?: "mukhwas" | "dhoop-bati" | "mouth-freshener";
 };
 
@@ -761,35 +762,49 @@ export default function MediaTile({
     );
   };
 
+  const isComingSoon = Boolean(d.isComingSoon);
+
   return (
     <li className="list-item min-w-0 shrink-0">
       <a
-        href={d.href}
-        className="flex flex-col items-center justify-center group cursor-pointer px-1 xs:px-1.5 sm:px-3 py-1 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-meru-gold/60 rounded-[8px]"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        href={isComingSoon ? "#" : d.href}
+        onClick={(e) => {
+          if (isComingSoon) {
+            e.preventDefault();
+          }
+        }}
+        className={`flex flex-col items-center justify-center group px-1 xs:px-1.5 sm:px-3 py-1 transition-all rounded-[8px] ${
+          isComingSoon
+            ? "cursor-default select-none pointer-events-none"
+            : "cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-meru-gold/60"
+        }`}
+        onMouseEnter={() => !isComingSoon && setIsHovered(true)}
+        onMouseLeave={() => !isComingSoon && setIsHovered(false)}
         aria-label={`${d.description} - ${d.tag || "Collection"}`}
       >
         {/* ====================================================================
             COMPACT RANGOLI MANDALA (LOOP ANIMATION) + SOLID WHITE MEDALLION
-            - On Mobile: Compact outer rangoli (104px) with BIGGER prominent white medallion (66px)
-            - On Desktop: Full luxury footprint (152px) with 82px medallion
-            - Icons are fully visible and 100% uncropped!
+            - Active item: Crisp, vivid, and animated
+            - Inactive / Coming Soon: Softly blurred, elegant muted presentation
            ==================================================================== */}
-        <div className="relative w-[104px] h-[104px] sm:w-[124px] sm:h-[124px] md:w-[152px] md:h-[152px] aspect-square shrink-0 flex items-center justify-center select-none">
+        <div
+          className={`relative w-[104px] h-[104px] sm:w-[124px] sm:h-[124px] md:w-[152px] md:h-[152px] aspect-square shrink-0 flex items-center justify-center select-none transition-all duration-300 ${
+            isComingSoon ? "filter blur-[1.6px] opacity-50 grayscale-[20%]" : ""
+          }`}
+        >
           {/* Authentic Rangoli Artwork with Ambient Loop Rotation */}
           <RangoliReferenceSurround
-            isHovered={isHovered}
-            isFeatured={isFeatured}
+            isHovered={isHovered && !isComingSoon}
+            isFeatured={isFeatured && !isComingSoon}
             index={index}
           />
 
-          {/* Central SOLID PURE WHITE Medallion Circle (Bigger relative to rangoli on mobile) */}
+          {/* Central SOLID PURE WHITE Medallion Circle */}
           <div
             className={`relative w-[66px] h-[66px] sm:w-[72px] sm:h-[72px] md:w-[82px] md:h-[82px] aspect-square shrink-0 rounded-full transition-all duration-300 ease-out flex items-center justify-center z-10 ${
-              isHovered
+              isHovered && !isComingSoon
                 ? "scale-[1.05] shadow-[0_6px_22px_rgba(201,154,40,0.35),0_2px_5px_rgba(0,0,0,0.08)] border-meru-gold"
-                : isFeatured
+                : isFeatured && !isComingSoon
                 ? "shadow-[0_4px_16px_rgba(201,154,40,0.22),0_1.5px_3px_rgba(0,0,0,0.06)] border-[#C99A28]/85"
                 : "shadow-[0_3px_12px_rgba(138,100,32,0.14),0_1px_2px_rgba(0,0,0,0.04)] border-[#8A6420]/50"
             } border-[1.5px]`}
@@ -801,9 +816,9 @@ export default function MediaTile({
             {/* Fine Inner Hairline Ring inside the Solid White Circle */}
             <div
               className={`absolute inset-[2.5px] sm:inset-[3px] rounded-full pointer-events-none transition-opacity duration-300 border border-dashed ${
-                isHovered
+                isHovered && !isComingSoon
                   ? "border-[#C99A28]/75 opacity-90"
-                  : isFeatured
+                  : isFeatured && !isComingSoon
                   ? "border-[#C99A28]/55 opacity-75"
                   : "border-[#8A6420]/35 opacity-55"
               }`}
@@ -824,8 +839,10 @@ export default function MediaTile({
           {d.tag && (
             <span
               className={`text-[8px] xs:text-[8.5px] sm:text-[9.5px] md:text-[10px] font-sans font-semibold uppercase tracking-[0.12em] sm:tracking-[0.18em] transition-colors duration-200 mb-0.5 sm:mb-1 whitespace-nowrap block ${
-                isFeatured
+                isFeatured && !isComingSoon
                   ? "text-meru-gold"
+                  : isComingSoon
+                  ? "text-meru-gold/60"
                   : "text-meru-gold/85 group-hover:text-meru-gold"
               }`}
             >
@@ -834,7 +851,13 @@ export default function MediaTile({
           )}
 
           {/* Collection Title: STRICTLY ONE LINE (whitespace-nowrap) */}
-          <h3 className="font-sans text-[12px] sm:text-[13.5px] md:text-[15.5px] font-medium text-deep-charcoal group-hover:text-meru-gold transition-colors duration-200 tracking-normal whitespace-nowrap text-center">
+          <h3
+            className={`font-sans text-[12px] sm:text-[13.5px] md:text-[15.5px] font-medium tracking-normal whitespace-nowrap text-center transition-colors duration-200 ${
+              isComingSoon
+                ? "text-deep-charcoal/60"
+                : "text-deep-charcoal group-hover:text-meru-gold"
+            }`}
+          >
             {d.description}
           </h3>
         </div>
