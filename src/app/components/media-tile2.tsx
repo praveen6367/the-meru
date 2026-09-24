@@ -21,6 +21,7 @@ export type MediaTile2Data = {
   label4: string;
   label5: string;
   isComingSoon?: boolean;
+  shopifyVariantId?: string;
 };
 
 /** An interactive hero product card for the Best Sellers showcase. */
@@ -46,6 +47,7 @@ export default function MediaTile2({
     const comparePrice = d.label3 ? parseFloat(d.label3.replace(/[^0-9.]/g, "")) : undefined;
     addItem({
       id: d.id2 || d.href || d.label,
+      merchandiseId: d.shopifyVariantId,
       title: d.label,
       price: numericPrice,
       compareAtPrice: comparePrice,

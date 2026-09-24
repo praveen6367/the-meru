@@ -26,6 +26,8 @@ export default function CartDrawer() {
     closeCart,
     updateQuantity,
     removeItem,
+    proceedToCheckout,
+    isLoading,
   } = useCart();
 
   const drawerRef = useRef<HTMLDivElement>(null);
@@ -254,12 +256,23 @@ export default function CartDrawer() {
               size="lg"
               fullWidth
               withArrow
-              onClick={() => {
-                window.location.href = "/checkout";
-              }}
+              disabled={isLoading}
+              onClick={proceedToCheckout}
             >
-              PROCEED TO CHECKOUT
+              {isLoading ? "PREPARING CHECKOUT..." : "PROCEED TO CHECKOUT"}
             </Button>
+
+            {/* View Full Cart Page Link */}
+            <LinkButton
+              variant="outline"
+              size="md"
+              fullWidth
+              href="/cart"
+              onClick={closeCart}
+              className="text-xs tracking-wider"
+            >
+              VIEW FULL CART
+            </LinkButton>
 
             {/* Payment & Security Badge */}
             <div className="flex items-center justify-center gap-1.5 pt-1 text-[11px] text-muted-foreground font-sans">

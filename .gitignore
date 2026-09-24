@@ -2,3 +2,9 @@ node_modules
 .next
 out
 dist
+.env
+.env.local
+.env.*.local
+*.log
+scratch
+*.tsbuildinfo

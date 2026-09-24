@@ -21,11 +21,12 @@ export default function ProductView({ product, relatedProducts }: ProductViewPro
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const mainImageRef = useRef<HTMLDivElement>(null);
-  const { addItem, openCart } = useCart();
+  const { addItem, openCart, proceedToCheckout } = useCart();
 
-  const handleAddToCart = (shouldOpenCart: boolean = true) => {
-    addItem({
-      id: product.id,
+  const handleAddToCart = async (shouldOpenCart: boolean = true) => {
+    await addItem({
+      id: product.shopifyVariantId || product.id,
+      merchandiseId: product.shopifyVariantId,
       title: product.title,
       price: product.price,
       compareAtPrice: product.compareAtPrice,
@@ -40,8 +41,18 @@ export default function ProductView({ product, relatedProducts }: ProductViewPro
     }
   };
 
-  const handleBuyNow = () => {
-    handleAddToCart(true);
+  const handleBuyNow = async () => {
+    await addItem({
+      id: product.shopifyVariantId || product.id,
+      merchandiseId: product.shopifyVariantId,
+      title: product.title,
+      price: product.price,
+      compareAtPrice: product.compareAtPrice,
+      image: product.images[0]?.src || "",
+      variant: product.subtitle,
+      quantity: quantity,
+    });
+    proceedToCheckout();
   };
 
   const toggleAccordion = (index: number) => {
@@ -74,6 +85,8 @@ export default function ProductView({ product, relatedProducts }: ProductViewPro
 
   const discountAmount = product.compareAtPrice - product.price;
   const activeImage = product.images[selectedImageIndex] || product.images[0];
+  const isComingSoon =
+    product.isComingSoon ?? (product.slug !== "the-meru-3-piece-stick-combo-pack");
 
   return (
     <div className="w-full bg-[#FFFFFF] text-deep-charcoal min-h-screen">
@@ -145,12 +158,20 @@ export default function ProductView({ product, relatedProducts }: ProductViewPro
               >
                 {/* Clean Product Badge Overlay (Subtle, Restrained) */}
                 <div className="absolute top-3 left-3 z-10 flex items-center gap-2 pointer-events-none">
-                  <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.12em] text-[#1E160D] bg-sacred-ivory/90 border border-meru-gold/40 px-2.5 py-1 rounded-[2px] uppercase backdrop-blur-xs">
-                    {product.badge}
-                  </span>
-                  <span className="text-[10px] sm:text-[11px] font-medium tracking-[0.08em] text-[#5D574E] bg-white/80 px-2 py-1 rounded-[2px] uppercase">
-                    {product.stockStatus}
-                  </span>
+                  {isComingSoon ? (
+                    <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.16em] text-meru-gold bg-[#1E1C19]/90 border border-meru-gold/50 px-2.5 py-1 rounded-[2px] uppercase backdrop-blur-xs">
+                      COMING SOON
+                    </span>
+                  ) : (
+                    <>
+                      <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.12em] text-[#1E160D] bg-sacred-ivory/90 border border-meru-gold/40 px-2.5 py-1 rounded-[2px] uppercase backdrop-blur-xs">
+                        {product.badge}
+                      </span>
+                      <span className="text-[10px] sm:text-[11px] font-medium tracking-[0.08em] text-[#5D574E] bg-white/80 px-2 py-1 rounded-[2px] uppercase">
+                        {product.stockStatus}
+                      </span>
+                    </>
+                  )}
                 </div>
 
                 {/* Subtle Expand Hint */}
@@ -260,71 +281,105 @@ export default function ProductView({ product, relatedProducts }: ProductViewPro
               </p>
             </div>
 
-            {/* 6. Compact Purchase Row (Quantity Stepper + Add to Cart + Buy Now) */}
-            <div className="mt-6 flex flex-col gap-3">
-              <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
-                {/* Quantity Stepper (120px) */}
-                <div className="flex items-center h-12 w-[120px] shrink-0 border border-deep-charcoal/20 rounded-[2px] bg-transparent">
-                  <button
-                    type="button"
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-10 h-full text-base text-deep-charcoal hover:text-meru-gold transition-colors flex items-center justify-center cursor-pointer select-none"
-                    aria-label="Decrease quantity"
-                  >
-                    −
-                  </button>
-                  <span className="flex-1 text-center font-sans text-sm font-semibold text-deep-charcoal select-none">
-                    {quantity}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="w-10 h-full text-base text-deep-charcoal hover:text-meru-gold transition-colors flex items-center justify-center cursor-pointer select-none"
-                    aria-label="Increase quantity"
-                  >
-                    +
-                  </button>
+            {/* 6. Purchase Action Block (Live purchase controls OR Coming Soon notice) */}
+            {isComingSoon ? (
+              <div className="mt-6 flex flex-col gap-3.5">
+                <div className="bg-[#FAF7F0] border border-meru-gold/30 rounded-[4px] p-4 flex flex-col gap-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-meru-gold animate-pulse" />
+                    <span className="font-sans text-[11px] uppercase font-bold tracking-[0.2em] text-meru-gold">
+                      RITUAL IN CRAFT • COMING SOON
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-[13px] text-[#5D574E] leading-relaxed font-sans">
+                    This sacred formulation is currently being handcrafted in limited micro-batches. Pre-orders and dispatch will open soon.
+                  </p>
                 </div>
 
-                {/* Primary Add to Cart (Global Gold Shimmer Button - 240px) */}
-                <div className="flex-1 min-w-[200px] sm:max-w-[260px]">
-                  <Button
-                    variant="primary"
-                    size="md"
-                    fullWidth
-                    withArrow={!added}
-                    glare
-                    onClick={() => handleAddToCart(true)}
-                    className="h-12 tracking-[0.14em] font-semibold"
-                  >
-                    {added ? "✓ ADDED TO CART" : "ADD TO CART"}
-                  </Button>
-                </div>
+                <Button
+                  variant="primary"
+                  size="md"
+                  fullWidth
+                  disabled
+                  className="h-12 tracking-[0.16em] font-semibold bg-[#1E1C19]/25 text-deep-charcoal/50 border-transparent cursor-not-allowed select-none"
+                >
+                  COMING SOON
+                </Button>
 
-                {/* Secondary Buy Now (Refined Ivory with Slender Border) */}
-                <div className="w-full sm:w-auto sm:min-w-[150px]">
-                  <Button
-                    variant="secondary"
-                    size="md"
-                    fullWidth
-                    withArrow
-                    onClick={handleBuyNow}
-                    className="h-12 tracking-[0.14em] font-medium"
-                  >
-                    BUY NOW
-                  </Button>
+                <div className="flex items-center gap-2 text-[11px] text-[#736B5E] pt-1">
+                  <span>✦ Pure botanical ingredients</span>
+                  <span className="text-deep-charcoal/20">·</span>
+                  <span>Artisanal micro-batch</span>
+                  <span className="text-deep-charcoal/20">·</span>
+                  <span>Launching soon</span>
                 </div>
               </div>
+            ) : (
+              <div className="mt-6 flex flex-col gap-3">
+                <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
+                  {/* Quantity Stepper (120px) */}
+                  <div className="flex items-center h-12 w-[120px] shrink-0 border border-deep-charcoal/20 rounded-[2px] bg-transparent">
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="w-10 h-full text-base text-deep-charcoal hover:text-meru-gold transition-colors flex items-center justify-center cursor-pointer select-none"
+                      aria-label="Decrease quantity"
+                    >
+                      −
+                    </button>
+                    <span className="flex-1 text-center font-sans text-sm font-semibold text-deep-charcoal select-none">
+                      {quantity}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="w-10 h-full text-base text-deep-charcoal hover:text-meru-gold transition-colors flex items-center justify-center cursor-pointer select-none"
+                      aria-label="Increase quantity"
+                    >
+                      +
+                    </button>
+                  </div>
 
-              {/* Quiet Craft Trust Line */}
-              <div className="flex items-center gap-2 text-[11px] text-[#736B5E] pt-1">
-                <span>✦ Handcrafted with dignity</span>
-                <span className="text-deep-charcoal/20">·</span>
-                <span>100% Charcoal-Free</span>
-                <span className="text-deep-charcoal/20">·</span>
-                <span>Direct Artisan Sourcing</span>
+                  {/* Primary Add to Cart (Global Gold Shimmer Button - 240px) */}
+                  <div className="flex-1 min-w-[200px] sm:max-w-[260px]">
+                    <Button
+                      variant="primary"
+                      size="md"
+                      fullWidth
+                      withArrow={!added}
+                      glare
+                      onClick={() => handleAddToCart(true)}
+                      className="h-12 tracking-[0.14em] font-semibold"
+                    >
+                      {added ? "✓ ADDED TO CART" : "ADD TO CART"}
+                    </Button>
+                  </div>
+
+                  {/* Secondary Buy Now (Refined Ivory with Slender Border) */}
+                  <div className="w-full sm:w-auto sm:min-w-[150px]">
+                    <Button
+                      variant="secondary"
+                      size="md"
+                      fullWidth
+                      withArrow
+                      onClick={handleBuyNow}
+                      className="h-12 tracking-[0.14em] font-medium"
+                    >
+                      BUY NOW
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Quiet Craft Trust Line */}
+                <div className="flex items-center gap-2 text-[11px] text-[#736B5E] pt-1">
+                  <span>✦ Handcrafted with dignity</span>
+                  <span className="text-deep-charcoal/20">·</span>
+                  <span>100% Charcoal-Free</span>
+                  <span className="text-deep-charcoal/20">·</span>
+                  <span>Direct Artisan Sourcing</span>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* 7. Product Introduction (Concise Editorial Paragraph) */}
             <div className="mt-7 pt-6 border-t border-deep-charcoal/8">
@@ -433,73 +488,90 @@ export default function ProductView({ product, relatedProducts }: ProductViewPro
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {relatedProducts.map((rel) => (
-              <div
-                key={rel.id}
-                className="bg-transparent flex flex-col justify-between group"
-              >
-                <Link href={`/products/${rel.slug}`} className="block relative">
-                  {/* Clean uncropped image canvas */}
-                  <div className="aspect-[4/3] w-full bg-[#FAF8F5]/80 p-6 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:bg-[#FAF8F5]">
-                    <img
-                      src={rel.images[0]?.src}
-                      alt={rel.title}
-                      className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <span className="absolute top-3 right-3 bg-sacred-ivory/95 border border-meru-gold/40 text-deep-charcoal text-[10px] font-bold px-2 py-0.5 rounded-[2px] uppercase tracking-wider">
-                      {rel.badge}
-                    </span>
-                  </div>
+            {relatedProducts.map((rel) => {
+              const isRelComingSoon =
+                rel.isComingSoon ?? (rel.slug !== "the-meru-3-piece-stick-combo-pack");
 
-                  <div className="mt-4 text-left font-sans">
-                    <span className="text-[11px] font-semibold text-meru-gold uppercase tracking-wider block">
-                      {rel.subtitle.split("•")[0]?.trim()}
-                    </span>
-                    <h4 className="font-sans text-base sm:text-lg font-semibold text-deep-charcoal mt-0.5 line-clamp-1 group-hover:text-meru-gold transition-colors">
-                      {rel.title}
-                    </h4>
-                    <div className="flex items-baseline gap-2.5 mt-1.5">
-                      <span className="text-base sm:text-lg font-bold text-deep-charcoal">
-                        ₹{rel.price.toLocaleString("en-IN")}
+              return (
+                <div
+                  key={rel.id}
+                  className="bg-transparent flex flex-col justify-between group"
+                >
+                  <Link href={`/products/${rel.slug}`} className="block relative">
+                    {/* Clean uncropped image canvas */}
+                    <div className="aspect-[4/3] w-full bg-[#FAF8F5]/80 p-6 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:bg-[#FAF8F5]">
+                      <img
+                        src={rel.images[0]?.src}
+                        alt={rel.title}
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <span className="absolute top-3 right-3 bg-sacred-ivory/95 border border-meru-gold/40 text-deep-charcoal text-[10px] font-bold px-2 py-0.5 rounded-[2px] uppercase tracking-wider">
+                        {isRelComingSoon ? "COMING SOON" : rel.badge}
                       </span>
-                      {rel.compareAtPrice > rel.price && (
-                        <span className="text-xs text-[#736B5E] line-through">
-                          ₹{rel.compareAtPrice.toLocaleString("en-IN")}
-                        </span>
-                      )}
                     </div>
-                  </div>
-                </Link>
 
-                <div className="mt-4 pt-3 border-t border-deep-charcoal/8 flex items-center gap-3">
-                  <Link
-                    href={`/products/${rel.slug}`}
-                    className="flex-1 text-center py-2.5 px-3 rounded-[2px] border border-deep-charcoal/20 text-xs font-semibold text-deep-charcoal hover:border-deep-charcoal hover:bg-sacred-ivory transition-colors uppercase tracking-wider"
-                  >
-                    View Details
+                    <div className="mt-4 text-left font-sans">
+                      <span className="text-[11px] font-semibold text-meru-gold uppercase tracking-wider block">
+                        {rel.subtitle.split("•")[0]?.trim()}
+                      </span>
+                      <h4 className="font-sans text-base sm:text-lg font-semibold text-deep-charcoal mt-0.5 line-clamp-1 group-hover:text-meru-gold transition-colors">
+                        {rel.title}
+                      </h4>
+                      <div className="flex items-baseline gap-2.5 mt-1.5">
+                        <span className="text-base sm:text-lg font-bold text-deep-charcoal">
+                          ₹{rel.price.toLocaleString("en-IN")}
+                        </span>
+                        {rel.compareAtPrice > rel.price && (
+                          <span className="text-xs text-[#736B5E] line-through">
+                            ₹{rel.compareAtPrice.toLocaleString("en-IN")}
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   </Link>
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    onClick={() => {
-                      addItem({
-                        id: rel.id,
-                        title: rel.title,
-                        price: rel.price,
-                        compareAtPrice: rel.compareAtPrice,
-                        image: rel.images[0]?.src || "",
-                        variant: rel.subtitle,
-                        quantity: 1,
-                      });
-                      openCart();
-                    }}
-                    className="flex-1 h-10 tracking-[0.12em] font-semibold"
-                  >
-                    + ADD TO CART
-                  </Button>
+
+                  <div className="mt-4 pt-3 border-t border-deep-charcoal/8 flex items-center gap-3">
+                    <Link
+                      href={`/products/${rel.slug}`}
+                      className="flex-1 text-center py-2.5 px-3 rounded-[2px] border border-deep-charcoal/20 text-xs font-semibold text-deep-charcoal hover:border-deep-charcoal hover:bg-sacred-ivory transition-colors uppercase tracking-wider"
+                    >
+                      View Details
+                    </Link>
+                    {isRelComingSoon ? (
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        disabled
+                        className="flex-1 h-10 tracking-[0.12em] font-semibold bg-[#1E1C19]/25 text-deep-charcoal/50 border-transparent cursor-not-allowed select-none"
+                      >
+                        COMING SOON
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => {
+                          addItem({
+                            id: rel.shopifyVariantId || rel.id,
+                            merchandiseId: rel.shopifyVariantId,
+                            title: rel.title,
+                            price: rel.price,
+                            compareAtPrice: rel.compareAtPrice,
+                            image: rel.images[0]?.src || "",
+                            variant: rel.subtitle,
+                            quantity: 1,
+                          });
+                          openCart();
+                        }}
+                        className="flex-1 h-10 tracking-[0.12em] font-semibold"
+                      >
+                        + ADD TO CART
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       )}

@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import MediaTile2, { type MediaTile2Data } from "../components/media-tile2";
-import { MediaTile2_styles } from "../_styles";
+import type { ShopifyProduct } from "../../lib/shopify/types";
 
 const defaultProducts: MediaTile2Data[] = [
   {
@@ -55,7 +55,54 @@ const defaultProducts: MediaTile2Data[] = [
   },
 ];
 
-export default function LogoCloudSection({ mediaTile2Data = defaultProducts } = {}) {
+export default function LogoCloudSection({
+  mediaTile2Data: initialData = defaultProducts,
+}: {
+  mediaTile2Data?: MediaTile2Data[];
+} = {}) {
+  const [productsData, setProductsData] = useState<MediaTile2Data[]>(initialData);
+
+  // Synchronize dynamically with Shopify Storefront API
+  useEffect(() => {
+    fetch("/api/shopify/products")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.products) && data.products.length > 0) {
+          const shopifyMap = new Map<string, ShopifyProduct>();
+          data.products.forEach((p: ShopifyProduct) => {
+            shopifyMap.set(p.handle, p);
+          });
+
+          // Enrich existing product cards with dynamic Shopify variant IDs and prices
+          setProductsData((prev) =>
+            prev.map((tile) => {
+              const handle = tile.href.replace("/products/", "").trim();
+              const shopifyProduct = shopifyMap.get(handle);
+              if (!shopifyProduct) return tile;
+
+              const variant = shopifyProduct.variants.edges[0]?.node;
+              const formattedPrice = variant
+                ? `₹${Math.round(parseFloat(variant.price.amount)).toLocaleString("en-IN")}`
+                : tile.label4;
+              const formattedCompareAt = variant?.compareAtPrice
+                ? `₹${Math.round(parseFloat(variant.compareAtPrice.amount)).toLocaleString("en-IN")}`
+                : tile.label3;
+
+              return {
+                ...tile,
+                shopifyVariantId: variant?.id,
+                label4: formattedPrice,
+                label3: formattedCompareAt,
+              };
+            })
+          );
+        }
+      })
+      .catch(() => {
+        // Fallback silently to initialData
+      });
+  }, []);
+
   return (
     <div className="w-full max-w-[1440px] 2xl:max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12">
       {/* Product Cards:
@@ -63,7 +110,7 @@ export default function LogoCloudSection({ mediaTile2Data = defaultProducts } = 
           - Mobile: Coming soon products hidden completely; only center dhoop batti product displayed.
       */}
       <div className="flex flex-col gap-5 sm:gap-6 md:grid md:grid-cols-3 md:gap-4 lg:gap-5 py-2 items-stretch justify-center">
-        {mediaTile2Data.map((d, i) => {
+        {productsData.map((d, i) => {
           const isComingSoon = d.isComingSoon ?? (i === 0 || i === 2);
           return (
             <div

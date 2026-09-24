@@ -177,10 +177,10 @@ export default function PhoolFlowercyclingProcessSection() {
                     {/* CENTER CIRCLE WITH STEP NUMBER */}
                     <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                       <div
-                        className={`w-11 h-11 rounded-full flex items-center justify-center font-sans font-semibold text-sm transition-all duration-500 border-2 ${
+                        className={`w-10 h-10 rounded-full flex items-center justify-center font-sans font-semibold text-sm transition-all duration-500 border-2 ${
                           isPassed
-                            ? "bg-[#BA8136] text-white border-[#BA8136] shadow-sm scale-110"
-                            : "bg-[#FAF8F5] text-[#46382B] border-[#BA8136]/50"
+                            ? "bg-[#BA8136] text-white border-[#BA8136] shadow-md scale-110 ring-4 ring-[#BA8136]/20"
+                            : "bg-[#FBF8F3] text-[#3D2F22] border-[#BA8136]/50"
                         }`}
                       >
                         {item.step}
@@ -217,7 +217,7 @@ export default function PhoolFlowercyclingProcessSection() {
                               priority={item.step <= 2}
                             />
                           </div>
-                          <p className="mt-4 text-[#46382B] font-sans text-sm sm:text-base leading-relaxed max-w-sm mx-auto">
+                          <p className="mt-4 text-[#2D2319] font-sans text-sm sm:text-base leading-relaxed max-w-md mx-auto">
                             {item.description}
                           </p>
                         </div>
@@ -245,7 +245,7 @@ export default function PhoolFlowercyclingProcessSection() {
                               priority={item.step <= 2}
                             />
                           </div>
-                          <p className="mt-4 text-[#46382B] font-sans text-sm sm:text-base leading-relaxed max-w-sm mx-auto">
+                          <p className="mt-4 text-[#2D2319] font-sans text-sm sm:text-base leading-relaxed max-w-md mx-auto">
                             {item.description}
                           </p>
                         </div>
@@ -262,8 +262,8 @@ export default function PhoolFlowercyclingProcessSection() {
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center font-sans font-semibold text-xs transition-all duration-300 border-2 ${
                           isPassed
-                            ? "bg-[#BA8136] text-white border-[#BA8136]"
-                            : "bg-[#FAF8F5] text-[#46382B] border-[#BA8136]/50"
+                            ? "bg-[#BA8136] text-white border-[#BA8136] shadow-sm"
+                            : "bg-[#FBF8F3] text-[#3D2F22] border-[#BA8136]/50"
                         }`}
                       >
                         {item.step}
@@ -287,7 +287,7 @@ export default function PhoolFlowercyclingProcessSection() {
                           className="object-contain"
                         />
                       </div>
-                      <p className="mt-3 text-[#46382B] font-sans text-xs sm:text-sm leading-relaxed max-w-sm">
+                      <p className="mt-3 text-[#2D2319] font-sans text-xs sm:text-sm leading-relaxed max-w-sm">
                         {item.description}
                       </p>
                     </div>

@@ -30,8 +30,11 @@ export interface ProductItem {
   highlights: ProductHighlight[];
   accordions: ProductAccordionItem[];
   relatedProductSlugs: string[];
-  stockStatus: "In Stock" | "Low Stock" | "Out of Stock";
+  stockStatus: "In Stock" | "Low Stock" | "Out of Stock" | "Coming Soon";
   sku: string;
+  isComingSoon?: boolean;
+  shopifyProductId?: string;
+  shopifyVariantId?: string;
 }
 
 export const THE_MERU_PRODUCTS: ProductItem[] = [
@@ -121,7 +124,8 @@ export const THE_MERU_PRODUCTS: ProductItem[] = [
       "the-meru-3-piece-stick-combo-pack",
       "mouth-freshener-quartet-4-packs",
     ],
-    stockStatus: "In Stock",
+    stockStatus: "Coming Soon",
+    isComingSoon: true,
     sku: "MERU-MKW-06",
   },
   {
@@ -232,7 +236,10 @@ export const THE_MERU_PRODUCTS: ProductItem[] = [
       "mouth-freshener-quartet-4-packs",
     ],
     stockStatus: "In Stock",
+    isComingSoon: false,
     sku: "MERU-DHP-03",
+    shopifyProductId: "gid://shopify/Product/10352662479096",
+    shopifyVariantId: "gid://shopify/ProductVariant/50623227920632",
   },
   {
     id: "mouth-freshener-quartet-4-packs",
@@ -318,7 +325,8 @@ export const THE_MERU_PRODUCTS: ProductItem[] = [
       "mukhwas-treats-pack-of-6",
       "the-meru-3-piece-stick-combo-pack",
     ],
-    stockStatus: "In Stock",
+    stockStatus: "Coming Soon",
+    isComingSoon: true,
     sku: "MERU-QRT-04",
   },
 ];
