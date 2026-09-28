@@ -12,16 +12,8 @@ export default function Section2() {
       className="w-full bg-sacred-ivory border-b border-deep-charcoal/10 text-deep-charcoal py-2 px-4 text-center select-none relative z-30"
       id="the-meru-announcement"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 text-[11px] sm:text-xs font-sans tracking-widest uppercase font-medium">
-        <span className="text-meru-gold font-sans">✧</span>
-        <span>
-          Free Shipping on all orders over <strong className="font-semibold text-deep-charcoal">₹499/-</strong>
-        </span>
-        <span className="hidden sm:inline text-deep-charcoal/30">•</span>
-        <span className="hidden sm:inline text-muted-foreground">
-          Handcrafted Sacred Rituals
-        </span>
-        <span className="text-meru-gold font-sans">✧</span>
+      <div className="max-w-7xl mx-auto flex items-center justify-center text-[11px] sm:text-xs font-sans tracking-wide font-medium text-deep-charcoal">
+        <span>100% charcoal free - free delivery all over India - hand made - Bamboo less</span>
       </div>
     </div>
   );

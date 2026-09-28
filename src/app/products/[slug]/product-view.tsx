@@ -271,7 +271,7 @@ export default function ProductView({ product, relatedProducts }: ProductViewPro
 
               {/* Shipping Microcopy */}
               <p className="text-[11px] sm:text-xs text-[#736B5E] font-normal mt-1">
-                Inclusive of all taxes · Free express shipping on eligible orders
+                Inclusive of all taxes · Free delivery all over India
               </p>
 
               {/* Net Content Specification */}
