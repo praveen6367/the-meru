@@ -1050,3 +1050,25 @@ body { font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, 'Seg
 .meru-seal-animate {
   animation: meruSealReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Continuous Luxury Announcement Marquee */
+@keyframes meruMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-meru-marquee {
+  display: flex;
+  width: max-content;
+  animation: meruMarquee 32s linear infinite;
+  will-change: transform;
+}
+
+.animate-meru-marquee:hover {
+  animation-play-state: paused;
+}
+

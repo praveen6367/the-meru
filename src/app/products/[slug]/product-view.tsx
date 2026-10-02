@@ -5,6 +5,7 @@ import Link from "next/link";
 import { type ProductItem } from "../../../data/products";
 import { useCart } from "../../../context/CartContext";
 import { Button, MeruArrow } from "../../../design-system/components/Button";
+import { initiateShiprocketCheckout } from "../../../lib/shiprocket";
 
 interface ProductViewProps {
   product: ProductItem;
@@ -42,8 +43,9 @@ export default function ProductView({ product, relatedProducts }: ProductViewPro
   };
 
   const handleBuyNow = async () => {
+    const rawVariant = product.shopifyVariantId || product.id || "50623227920632";
     await addItem({
-      id: product.shopifyVariantId || product.id,
+      id: rawVariant,
       merchandiseId: product.shopifyVariantId,
       title: product.title,
       price: product.price,
@@ -52,7 +54,23 @@ export default function ProductView({ product, relatedProducts }: ProductViewPro
       variant: product.subtitle,
       quantity: quantity,
     });
-    proceedToCheckout();
+
+    const handled = await initiateShiprocketCheckout({
+      type: "product",
+      products: [
+        {
+          variantId: rawVariant,
+          quantity: quantity,
+          title: product.title,
+          price: product.price,
+          image: product.images[0]?.src || "",
+        },
+      ],
+    });
+
+    if (!handled) {
+      proceedToCheckout({ type: "product" });
+    }
   };
 
   const toggleAccordion = (index: number) => {
@@ -271,7 +289,7 @@ export default function ProductView({ product, relatedProducts }: ProductViewPro
 
               {/* Shipping Microcopy */}
               <p className="text-[11px] sm:text-xs text-[#736B5E] font-normal mt-1">
-                Inclusive of all taxes · Free delivery all over India
+                Inclusive of all taxes · Free delivery on orders above ₹299 (Flat ₹100 under ₹299)
               </p>
 
               {/* Net Content Specification */}

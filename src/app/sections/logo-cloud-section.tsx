@@ -33,7 +33,7 @@ const defaultProducts: MediaTile2Data[] = [
     id: "AddProductForm-the-meru-dhoop-sticks-combo-3",
     id2: "BtnAddProduct-the-meru-dhoop-sticks-combo-3",
     label3: "₹400",
-    label4: "₹300",
+    label4: "₹299",
     label5: "25% OFF",
     isComingSoon: false,
   },

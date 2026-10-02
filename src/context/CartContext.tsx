@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import type { ShopifyCart } from "../lib/shopify/types";
+import { initiateShiprocketCheckout } from "../lib/shiprocket";
 
 export interface CartItem {
   id: string; // Line ID or fallback ID
@@ -22,6 +23,8 @@ interface CartContextType {
   amountToFreeShipping: number;
   hasFreeShipping: boolean;
   freeShippingProgress: number; // 0 to 100
+  shippingFee: number;
+  totalWithShipping: number;
   isCartOpen: boolean;
   isLoading: boolean;
   checkoutUrl: string | null;
@@ -32,10 +35,16 @@ interface CartContextType {
   removeItem: (id: string) => Promise<void>;
   updateQuantity: (id: string, quantity: number) => Promise<void>;
   clearCart: () => void;
-  proceedToCheckout: () => void;
+  proceedToCheckout: (options?: {
+    type?: "cart" | "product";
+    couponCode?: string;
+    utmParams?: string;
+    cartAttributes?: Record<string, string>;
+  } | React.SyntheticEvent) => Promise<void>;
 }
 
-const FREE_SHIPPING_THRESHOLD = 499;
+const FREE_SHIPPING_THRESHOLD = 299;
+const STANDARD_SHIPPING_FEE = 100;
 
 const INITIAL_ITEMS: CartItem[] = [];
 
@@ -123,9 +132,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const amountToFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
-  const hasFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
-  const freeShippingProgress = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100));
+  // Free shipping on orders ABOVE 299; flat ₹100 for orders ₹299 or less
+  const hasFreeShipping = subtotal > FREE_SHIPPING_THRESHOLD;
+  const shippingFee = items.length === 0 ? 0 : hasFreeShipping ? 0 : STANDARD_SHIPPING_FEE;
+  const totalWithShipping = subtotal + shippingFee;
+  const amountToFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD + 1 - subtotal);
+  const freeShippingProgress = Math.min(100, Math.round((subtotal / (FREE_SHIPPING_THRESHOLD + 1)) * 100));
 
   const openCart = useCallback(() => setIsCartOpen(true), []);
   const closeCart = useCallback(() => setIsCartOpen(false), []);
@@ -281,15 +293,54 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Proceed to Shopify checkout
-  const proceedToCheckout = async () => {
+  // Proceed to Shiprocket / Shopify checkout
+  const proceedToCheckout = async (options?: {
+    type?: "cart" | "product";
+    couponCode?: string;
+    utmParams?: string;
+    cartAttributes?: Record<string, string>;
+  } | React.SyntheticEvent) => {
+    if (items.length === 0) return;
+    setIsLoading(true);
+
+    const isEvent = options && "nativeEvent" in options;
+    const cleanOptions = isEvent ? undefined : (options as {
+      type?: "cart" | "product";
+      couponCode?: string;
+      utmParams?: string;
+      cartAttributes?: Record<string, string>;
+    });
+    const checkoutType = cleanOptions?.type || "cart";
+
+    // 1. Primary: Initiate Shiprocket / Fastrr 1-Click Checkout buyDirect
+    const handled = await initiateShiprocketCheckout({
+      type: checkoutType,
+      products: items.map((i) => ({
+        variantId: i.merchandiseId || i.id,
+        merchandiseId: i.merchandiseId,
+        id: i.id,
+        quantity: i.quantity,
+        title: i.title,
+        price: i.price,
+        image: i.image,
+      })),
+      couponCode: cleanOptions?.couponCode,
+      utmParams: cleanOptions?.utmParams,
+      cartAttributes: cleanOptions?.cartAttributes,
+    });
+
+    if (handled) {
+      setIsLoading(false);
+      return;
+    }
+
+    // 2. Direct Shopify Cart / permalink fallback
     if (checkoutUrl) {
       window.location.href = checkoutUrl;
       return;
     }
 
     // If checkoutUrl is not set yet, attempt to create it dynamically with current items
-    setIsLoading(true);
     const validLines = items
       .map((i) => ({
         merchandiseId:
@@ -351,6 +402,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         amountToFreeShipping,
         hasFreeShipping,
         freeShippingProgress,
+        shippingFee,
+        totalWithShipping,
         isCartOpen,
         isLoading,
         checkoutUrl,

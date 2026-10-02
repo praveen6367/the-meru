@@ -24,6 +24,8 @@ export default function CartPage() {
     amountToFreeShipping,
     hasFreeShipping,
     freeShippingProgress,
+    shippingFee,
+    totalWithShipping,
     updateQuantity,
     removeItem,
     proceedToCheckout,
@@ -68,7 +70,7 @@ export default function CartPage() {
                 <span>
                   {hasFreeShipping ? (
                     <span className="text-botanical font-semibold">
-                      ✓ You have unlocked Free Express Delivery!
+                      ✓ You have unlocked Free Express Delivery (Above ₹299)!
                     </span>
                   ) : (
                     <span>
@@ -76,7 +78,10 @@ export default function CartPage() {
                       <strong className="text-deep-charcoal font-bold">
                         ₹{amountToFreeShipping.toLocaleString("en-IN")}
                       </strong>{" "}
-                      more to qualify for <strong className="text-meru-gold">Free Delivery!</strong>
+                      more to qualify for <strong className="text-meru-gold">Free Delivery!</strong>{" "}
+                      <span className="text-xs text-[#736B5E] block sm:inline sm:ml-1 font-normal">
+                        (Free above ₹299 · ₹100 under ₹299)
+                      </span>
                     </span>
                   )}
                 </span>
@@ -218,21 +223,21 @@ export default function CartPage() {
 
                   <div className="flex justify-between items-center text-[#5D574E]">
                     <span>Estimated Shipping</span>
-                    <span className={hasFreeShipping ? "text-botanical font-semibold" : ""}>
-                      {hasFreeShipping ? "FREE" : "₹50 (Free over ₹499)"}
+                    <span className={hasFreeShipping ? "text-botanical font-semibold" : "font-medium text-deep-charcoal"}>
+                      {hasFreeShipping ? "FREE" : "₹100 (Free above ₹299)"}
                     </span>
                   </div>
 
                   <div className="flex justify-between items-baseline pt-4 mt-2 border-t border-deep-charcoal/10 text-base">
                     <span className="font-bold text-deep-charcoal">Estimated Total</span>
                     <span className="text-xl font-bold text-deep-charcoal">
-                      ₹{(subtotal + (hasFreeShipping ? 0 : 50)).toLocaleString("en-IN")}.00 INR
+                      ₹{totalWithShipping.toLocaleString("en-IN")}.00 INR
                     </span>
                   </div>
                 </div>
 
                 <p className="text-[11px] text-[#736B5E] mt-2 mb-6">
-                  Taxes included. Complete shipping and payment details calculated at official Shopify checkout.
+                  Taxes included. Free delivery on orders above ₹299 (Flat ₹100 under ₹299). Complete payment details secured at checkout.
                 </p>
 
                 <Button

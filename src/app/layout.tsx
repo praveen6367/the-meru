@@ -3,6 +3,7 @@ import "./ditto.css";
 import type { ReactNode } from "react";
 import { SITE_ORIGIN } from "../lib/site";
 import { CartProvider } from "../context/CartContext";
+import FakeOrderPopup from "./components/fake-order-popup";
 
 export const metadata = {
   "metadataBase": new URL(SITE_ORIGIN || "http://localhost:3000"),
@@ -40,9 +41,31 @@ export const viewport = {
 
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const sellerDomain =
+    process.env.NEXT_PUBLIC_SELLER_DOMAIN ||
+    process.env.NEXT_PUBLIC_SHOPIFY_SHOP_DOMAIN ||
+    "bir7yt-0k.myshopify.com";
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Fastrr / Shiprocket Headless Checkout CSS */}
+        <link
+          rel="stylesheet"
+          href="https://fastrr-boost-ui.pickrr.com/assets/styles/shopify.css"
+        />
+
+        {/* Fastrr / Shiprocket Initiation Scripts */}
+        <script
+          src="https://fastrr-boost-ui.pickrr.com/assets/js/channels/shopify.js"
+          defer
+        />
+        <script
+          type="text/javascript"
+          src="https://fastrr-boost-ui.pickrr.com/assets/js/channels/mobileApp.js"
+          defer
+        />
+
         <script
           key="ditto-json-ld-0"
           type="application/ld+json"
@@ -78,8 +101,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
       <body className="w-full min-h-screen text-foreground [font-family:GothamRounded-Light] text-base font-normal bg-background antialiased" suppressHydrationWarning>
+        {/* Shiprocket / Fastrr Configuration */}
+        <input type="hidden" value={sellerDomain} id="sellerDomain" />
+
         <CartProvider>
           {children}
+          <FakeOrderPopup />
         </CartProvider>
       </body>
     </html>

@@ -22,6 +22,8 @@ export default function CartDrawer() {
     amountToFreeShipping,
     hasFreeShipping,
     freeShippingProgress,
+    shippingFee,
+    totalWithShipping,
     isCartOpen,
     closeCart,
     updateQuantity,
@@ -104,7 +106,7 @@ export default function CartDrawer() {
               <span>
                 {hasFreeShipping ? (
                   <span className="text-botanical font-semibold">
-                    ✓ You have unlocked Free Delivery!
+                    ✓ You have unlocked Free Delivery (Above ₹299)!
                   </span>
                 ) : (
                   <span>
@@ -112,7 +114,10 @@ export default function CartDrawer() {
                     <strong className="text-deep-charcoal font-bold">
                       ₹{amountToFreeShipping.toLocaleString("en-IN")}
                     </strong>{" "}
-                    more for <strong className="text-meru-gold">Free Delivery!</strong>
+                    more for <strong className="text-meru-gold">Free Delivery!</strong>{" "}
+                    <span className="text-[10px] text-muted-foreground block sm:inline sm:ml-1">
+                      (Free above ₹299 · ₹100 under ₹299)
+                    </span>
                   </span>
                 )}
               </span>
@@ -237,17 +242,31 @@ export default function CartDrawer() {
         {/* Footer / Subtotal & Checkout */}
         {items.length > 0 && (
           <div className="p-4 sm:p-5 border-t border-deep-charcoal/10 bg-[#FFFFFF] flex flex-col gap-3">
-            <div className="flex items-baseline justify-between text-sm font-sans">
-              <span className="font-semibold text-deep-charcoal uppercase tracking-wider text-xs">
-                SUBTOTAL
-              </span>
-              <span className="font-sans text-base sm:text-lg font-bold text-deep-charcoal">
-                ₹{subtotal.toLocaleString("en-IN")}.00 INR
-              </span>
+            <div className="flex flex-col gap-1.5 text-xs font-sans pb-1">
+              <div className="flex items-center justify-between text-[#5D574E]">
+                <span>Subtotal</span>
+                <span className="font-medium text-deep-charcoal">
+                  ₹{subtotal.toLocaleString("en-IN")}.00 INR
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-[#5D574E]">
+                <span>Estimated Shipping</span>
+                <span className={hasFreeShipping ? "text-botanical font-semibold" : "font-medium text-deep-charcoal"}>
+                  {hasFreeShipping ? "FREE" : "₹100 (Free above ₹299)"}
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between text-sm pt-2 border-t border-deep-charcoal/10">
+                <span className="font-semibold text-deep-charcoal uppercase tracking-wider text-xs">
+                  ESTIMATED TOTAL
+                </span>
+                <span className="font-sans text-base sm:text-lg font-bold text-deep-charcoal">
+                  ₹{totalWithShipping.toLocaleString("en-IN")}.00 INR
+                </span>
+              </div>
             </div>
 
             <p className="text-[11px] text-muted-foreground font-sans leading-tight">
-              Taxes included. Shipping calculated at checkout.
+              Taxes included. Free delivery on orders above ₹299 (₹100 standard shipping under ₹299).
             </p>
 
             {/* Buy Now / Checkout Button */}
