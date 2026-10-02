@@ -289,7 +289,7 @@ export default function ProductView({ product, relatedProducts }: ProductViewPro
 
               {/* Shipping Microcopy */}
               <p className="text-[11px] sm:text-xs text-[#736B5E] font-normal mt-1">
-                Inclusive of all taxes · Free delivery on orders above ₹299 (Flat ₹100 under ₹299)
+                Inclusive of all taxes · Free delivery on orders above ₹300 (Flat ₹100 under ₹300)
               </p>
 
               {/* Net Content Specification */}

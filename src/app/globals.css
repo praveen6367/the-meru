@@ -1072,3 +1072,24 @@ body { font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, 'Seg
   animation-play-state: paused;
 }
 
+/* Party Blast Sparkle Animation */
+@keyframes meruSparkleAnim {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-15deg);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.25) rotate(10deg);
+  }
+  70% {
+    opacity: 0.9;
+    transform: scale(1.1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.4) rotate(25deg) translateY(-25px);
+  }
+}
+
+

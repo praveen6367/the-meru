@@ -70,7 +70,7 @@ export default function CartPage() {
                 <span>
                   {hasFreeShipping ? (
                     <span className="text-botanical font-semibold">
-                      ✓ You have unlocked Free Express Delivery (Above ₹299)!
+                      ✓ You have unlocked Free Express Delivery (Above ₹300)!
                     </span>
                   ) : (
                     <span>
@@ -80,7 +80,7 @@ export default function CartPage() {
                       </strong>{" "}
                       more to qualify for <strong className="text-meru-gold">Free Delivery!</strong>{" "}
                       <span className="text-xs text-[#736B5E] block sm:inline sm:ml-1 font-normal">
-                        (Free above ₹299 · ₹100 under ₹299)
+                        (Free above ₹300 · ₹100 under ₹300)
                       </span>
                     </span>
                   )}
@@ -224,7 +224,7 @@ export default function CartPage() {
                   <div className="flex justify-between items-center text-[#5D574E]">
                     <span>Estimated Shipping</span>
                     <span className={hasFreeShipping ? "text-botanical font-semibold" : "font-medium text-deep-charcoal"}>
-                      {hasFreeShipping ? "FREE" : "₹100 (Free above ₹299)"}
+                      {hasFreeShipping ? "FREE" : "₹100 (Free above ₹300)"}
                     </span>
                   </div>
 
@@ -237,7 +237,7 @@ export default function CartPage() {
                 </div>
 
                 <p className="text-[11px] text-[#736B5E] mt-2 mb-6">
-                  Taxes included. Free delivery on orders above ₹299 (Flat ₹100 under ₹299). Complete payment details secured at checkout.
+                  Taxes included. Free delivery on orders above ₹300 (Flat ₹100 under ₹300). Complete payment details secured at checkout.
                 </p>
 
                 <Button

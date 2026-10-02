@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { SITE_ORIGIN } from "../lib/site";
 import { CartProvider } from "../context/CartContext";
 import FakeOrderPopup from "./components/fake-order-popup";
+import PartyBlastListener from "./components/party-blast-listener";
 
 export const metadata = {
   "metadataBase": new URL(SITE_ORIGIN || "http://localhost:3000"),
@@ -107,6 +108,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <CartProvider>
           {children}
           <FakeOrderPopup />
+          <PartyBlastListener />
         </CartProvider>
       </body>
     </html>

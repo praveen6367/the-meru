@@ -116,7 +116,7 @@ export const THE_MERU_PRODUCTS: ProductItem[] = [
         content: [
           "All orders are packed in eco-conscious, recyclable cartons and dispatched within 24 to 48 hours.",
           "Standard delivery arrives within 3–5 business days across major Indian metros, and 5–7 days for all other pin codes.",
-          "Free shipping on orders above ₹299 (Flat ₹100 for orders ₹299 and below). If your package arrives damaged or tampered with, notify us within 48 hours of delivery for a prompt replacement.",
+          "Free shipping on orders above ₹300 (Flat ₹100 for orders ₹300 and below). If your package arrives damaged or tampered with, notify us within 48 hours of delivery for a prompt replacement.",
         ],
       },
     ],
@@ -138,7 +138,7 @@ export const THE_MERU_PRODUCTS: ProductItem[] = [
     ],
     title: "The Meru Dhoop Sticks – Combo Pack of 3 (150gms)",
     subtitle: "Indian Rose, Kesar Chandan & Lavender (150gms) • 100% Charcoal-Free",
-    price: 299,
+    price: 300,
     compareAtPrice: 400,
     discountPercentage: "25% OFF",
     netQuantity: "150gms",
@@ -227,7 +227,7 @@ export const THE_MERU_PRODUCTS: ProductItem[] = [
         content: [
           "Dispatched from our sacred artisanal workshop in 24–48 hours.",
           "Delivered across India in 3–5 business days with live SMS and tracking updates.",
-          "Free shipping on orders above ₹299 (Flat ₹100 for orders ₹299 and below). Hassle-free replacement if damaged during transit.",
+          "Free shipping on orders above ₹300 (Flat ₹100 for orders ₹300 and below). Hassle-free replacement if damaged during transit.",
         ],
       },
     ],
@@ -317,7 +317,7 @@ export const THE_MERU_PRODUCTS: ProductItem[] = [
         content: [
           "Dispatched in eco-friendly packaging within 24–48 hours.",
           "Pan-India shipping within 3–5 working days.",
-          "Free shipping on orders above ₹299 (Flat ₹100 for orders ₹299 and below). Full replacement support for any damaged items.",
+          "Free shipping on orders above ₹300 (Flat ₹100 for orders ₹300 and below). Full replacement support for any damaged items.",
         ],
       },
     ],

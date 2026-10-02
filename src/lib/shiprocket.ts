@@ -150,7 +150,7 @@ export async function initiateShiprocketCheckout(
           productId: numericId,
           product_id: numericId,
           title: p.title || "The Meru Ritual Item",
-          price: p.price ? Math.round(p.price * 100) : 29900,
+          price: p.price ? Math.round(p.price * 100) : 30000,
           quantity: Math.max(1, p.quantity || 1),
           image: p.image || "",
           Image: p.image || "",

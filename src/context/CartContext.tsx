@@ -1,8 +1,9 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
 import type { ShopifyCart } from "../lib/shopify/types";
 import { initiateShiprocketCheckout } from "../lib/shiprocket";
+import { triggerPartyBlast } from "../lib/celebration/partyBlast";
 
 export interface CartItem {
   id: string; // Line ID or fallback ID
@@ -41,9 +42,10 @@ interface CartContextType {
     utmParams?: string;
     cartAttributes?: Record<string, string>;
   } | React.SyntheticEvent) => Promise<void>;
+  triggerCelebration: () => void;
 }
 
-const FREE_SHIPPING_THRESHOLD = 299;
+const FREE_SHIPPING_THRESHOLD = 300;
 const STANDARD_SHIPPING_FEE = 100;
 
 const INITIAL_ITEMS: CartItem[] = [];
@@ -132,12 +134,26 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  // Free shipping on orders ABOVE 299; flat ₹100 for orders ₹299 or less
+  // Free shipping on orders strictly ABOVE 300; flat ₹100 for orders ₹300 or less
   const hasFreeShipping = subtotal > FREE_SHIPPING_THRESHOLD;
   const shippingFee = items.length === 0 ? 0 : hasFreeShipping ? 0 : STANDARD_SHIPPING_FEE;
   const totalWithShipping = subtotal + shippingFee;
   const amountToFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD + 1 - subtotal);
   const freeShippingProgress = Math.min(100, Math.round((subtotal / (FREE_SHIPPING_THRESHOLD + 1)) * 100));
+
+  // Party Blast Celebration on Free Shipping Progress Bar Completion / Eligibility
+  const prevHasFreeShipping = useRef(false);
+  useEffect(() => {
+    if (!isMounted) return;
+    if (hasFreeShipping && !prevHasFreeShipping.current && subtotal > 0) {
+      triggerPartyBlast({ intensity: "high" });
+    }
+    prevHasFreeShipping.current = hasFreeShipping;
+  }, [hasFreeShipping, subtotal, isMounted]);
+
+  const triggerCelebration = useCallback(() => {
+    triggerPartyBlast({ intensity: "high" });
+  }, []);
 
   const openCart = useCallback(() => setIsCartOpen(true), []);
   const closeCart = useCallback(() => setIsCartOpen(false), []);
@@ -415,6 +431,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         updateQuantity,
         clearCart,
         proceedToCheckout,
+        triggerCelebration,
       }}
     >
       {children}

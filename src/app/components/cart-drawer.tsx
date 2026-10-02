@@ -106,7 +106,7 @@ export default function CartDrawer() {
               <span>
                 {hasFreeShipping ? (
                   <span className="text-botanical font-semibold">
-                    ✓ You have unlocked Free Delivery (Above ₹299)!
+                    ✓ You have unlocked Free Delivery (Above ₹300)!
                   </span>
                 ) : (
                   <span>
@@ -116,7 +116,7 @@ export default function CartDrawer() {
                     </strong>{" "}
                     more for <strong className="text-meru-gold">Free Delivery!</strong>{" "}
                     <span className="text-[10px] text-muted-foreground block sm:inline sm:ml-1">
-                      (Free above ₹299 · ₹100 under ₹299)
+                      (Free above ₹300 · ₹100 under ₹300)
                     </span>
                   </span>
                 )}
@@ -252,7 +252,7 @@ export default function CartDrawer() {
               <div className="flex items-center justify-between text-[#5D574E]">
                 <span>Estimated Shipping</span>
                 <span className={hasFreeShipping ? "text-botanical font-semibold" : "font-medium text-deep-charcoal"}>
-                  {hasFreeShipping ? "FREE" : "₹100 (Free above ₹299)"}
+                  {hasFreeShipping ? "FREE" : "₹100 (Free above ₹300)"}
                 </span>
               </div>
               <div className="flex items-baseline justify-between text-sm pt-2 border-t border-deep-charcoal/10">
@@ -266,7 +266,7 @@ export default function CartDrawer() {
             </div>
 
             <p className="text-[11px] text-muted-foreground font-sans leading-tight">
-              Taxes included. Free delivery on orders above ₹299 (₹100 standard shipping under ₹299).
+              Taxes included. Free delivery on orders above ₹300 (₹100 standard shipping under ₹300).
             </p>
 
             {/* Buy Now / Checkout Button */}
