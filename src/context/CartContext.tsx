@@ -134,12 +134,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  // Free shipping on orders strictly ABOVE 300; flat ₹100 for orders ₹300 or less
-  const hasFreeShipping = subtotal > FREE_SHIPPING_THRESHOLD;
+  // Free shipping for the ₹300 product or any order ₹300 and above; flat ₹100 for orders ₹299 or less
+  const hasFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
   const shippingFee = items.length === 0 ? 0 : hasFreeShipping ? 0 : STANDARD_SHIPPING_FEE;
   const totalWithShipping = subtotal + shippingFee;
-  const amountToFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD + 1 - subtotal);
-  const freeShippingProgress = Math.min(100, Math.round((subtotal / (FREE_SHIPPING_THRESHOLD + 1)) * 100));
+  const amountToFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+  const freeShippingProgress = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100));
 
   // Party Blast Celebration on Free Shipping Progress Bar Completion / Eligibility
   const prevHasFreeShipping = useRef(false);

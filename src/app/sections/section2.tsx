@@ -5,12 +5,12 @@ import React from "react";
 /**
  * Top Announcement Marquee Bar for THE MERU.
  * Continuous smooth scrolling ticker with quiet luxury styling,
- * highlighting free shipping above ₹300, ₹100 shipping under ₹300,
+ * highlighting free shipping for ₹300 & above, ₹100 shipping for ₹299 & below,
  * and pure sacred craftsmanship.
  */
 const MARQUEE_ITEMS = [
-  { text: "Free Shipping on Orders Above ₹300", highlight: true },
-  { text: "Flat ₹100 Shipping on Orders ₹300 & Below", highlight: false },
+  { text: "Free Shipping on Orders of ₹300 & Above", highlight: true },
+  { text: "Flat ₹100 Shipping on Orders ₹299 & Below", highlight: false },
   { text: "100% Charcoal-Free & Bamboo-Less", highlight: false },
   { text: "Handcrafted with Sacred Temple Flowers", highlight: false },
   { text: "Pan-India Dispatch in 24–48 Hours", highlight: false },
@@ -39,9 +39,9 @@ export default function Section2() {
                 <span className="text-meru-gold text-xs">✦</span>
                 {item.highlight ? (
                   <span>
-                    Free Shipping on Orders Above{" "}
+                    Free Shipping on Orders of{" "}
                     <span className="text-deep-charcoal font-bold underline decoration-meru-gold/60 decoration-2">
-                      ₹300
+                      ₹300 & Above
                     </span>
                   </span>
                 ) : (
@@ -68,9 +68,9 @@ export default function Section2() {
                 <span className="text-meru-gold text-xs">✦</span>
                 {item.highlight ? (
                   <span>
-                    Free Shipping on Orders Above{" "}
+                    Free Shipping on Orders of{" "}
                     <span className="text-deep-charcoal font-bold underline decoration-meru-gold/60 decoration-2">
-                      ₹300
+                      ₹300 & Above
                     </span>
                   </span>
                 ) : (
